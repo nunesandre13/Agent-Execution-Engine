@@ -1,4 +1,4 @@
-package mcp
+package handlers
 
 import (
 	"fmt"
@@ -16,6 +16,14 @@ type Handlers struct {
 	engine    *domain.Engine
 	mu        sync.RWMutex
 	sandboxes map[string]domain.SandboxInstance
+}
+
+// NewHandlers creates a new instance of Handlers.
+func NewHandlers(engine *domain.Engine) *Handlers {
+	return &Handlers{
+		engine:    engine,
+		sandboxes: make(map[string]domain.SandboxInstance),
+	}
 }
 
 // getSandbox returns a sandbox instance by ID, or an error if it does not exist.

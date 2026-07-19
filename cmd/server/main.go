@@ -6,8 +6,8 @@ import (
 
 	"agents-execution-engine/internal/domain"
 	mcpserver "agents-execution-engine/internal/mcp"
-	"agents-execution-engine/internal/sandbox"
-	"agents-execution-engine/internal/versioning"
+	"agents-execution-engine/internal/sandbox/docker"
+	"agents-execution-engine/internal/versioning/git"
 )
 
 func main() {
@@ -16,10 +16,10 @@ func main() {
 
 	// 1. Create concrete providers.
 	// To replace Docker with micro-VMs, replace this line.
-	sandboxProvider := sandbox.NewDockerProvider()
+	sandboxProvider := docker.NewDockerProvider()
 
 	// To replace Git with OverlayFS, replace this line.
-	versioningProvider := versioning.NewGitProvider()
+	versioningProvider := git.NewGitProvider()
 
 	// 2. Assemble the engine with the providers.
 	engine := domain.NewEngine(sandboxProvider, versioningProvider)

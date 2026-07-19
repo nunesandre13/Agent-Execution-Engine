@@ -7,6 +7,7 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 
 	"agents-execution-engine/internal/domain"
+	"agents-execution-engine/internal/mcp/handlers"
 )
 
 // Server encapsulates the MCP server and all transport logic.
@@ -23,7 +24,7 @@ func NewServer(engine *domain.Engine) *Server {
 		"0.1.0",
 	)
 
-	h := &Handlers{engine: engine}
+	h := handlers.NewHandlers(engine)
 	registerTools(s, h)
 
 	return &Server{inner: s}
@@ -35,7 +36,7 @@ func (s *Server) ServeStdio() error {
 }
 
 // registerTools registers all MCP tools in the server.
-func registerTools(s *server.MCPServer, h *Handlers) {
+func registerTools(s *server.MCPServer, h *handlers.Handlers) {
 	// ── Sandbox Tools ──
 
 	s.AddTool(

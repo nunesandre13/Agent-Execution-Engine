@@ -1,4 +1,4 @@
-package versioning
+package git
 
 import (
 	"context"

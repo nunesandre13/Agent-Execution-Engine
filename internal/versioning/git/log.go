@@ -1,4 +1,4 @@
-package versioning
+package git
 
 import (
 	"context"
@@ -8,21 +8,6 @@ import (
 
 	"agents-execution-engine/internal/domain"
 )
-
-// Restore restores the workspace to a previous snapshot (commit).
-func (g *GitProvider) Restore(ctx context.Context, workspaceDir string, snapshotID string) error {
-	// Checkout the specified snapshot.
-	if err := g.runGit(ctx, workspaceDir, "checkout", snapshotID, "--", "."); err != nil {
-		return fmt.Errorf("git checkout failed: %w", err)
-	}
-
-	// Clean untracked files.
-	if err := g.runGit(ctx, workspaceDir, "clean", "-fd"); err != nil {
-		return fmt.Errorf("git clean failed: %w", err)
-	}
-
-	return nil
-}
 
 // Log returns the commit history, limited to 'limit' entries.
 func (g *GitProvider) Log(ctx context.Context, workspaceDir string, limit int) ([]domain.SnapshotInfo, error) {
