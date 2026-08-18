@@ -3,6 +3,7 @@ package docker
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -63,10 +64,9 @@ func (d *dockerInstance) Exec(ctx context.Context, cmd domain.Command) (domain.C
 	}
 
 	if err != nil {
-		if exitErr, ok := err.(*exec.ExitError); ok {
+		var exitErr *exec.ExitError
+		if errors.As(err, &exitErr) {
 			result.ExitCode = exitErr.ExitCode()
-		} else {
-			return result, fmt.Errorf("failed to exec in container %s: %w", d.containerID, err)
 		}
 	}
 

@@ -28,7 +28,7 @@ func (g *GitProvider) Diff(ctx context.Context, workspaceDir string) (string, er
 	// Add new files to the diff.
 	untrackedFiles := strings.TrimSpace(untrackedOutput)
 	if untrackedFiles != "" {
-		for _, file := range strings.Split(untrackedFiles, "\n") {
+		for file := range strings.SplitSeq(untrackedFiles, "\n") {
 			file = strings.TrimSpace(file)
 			if file == "" {
 				continue

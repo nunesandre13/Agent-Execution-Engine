@@ -22,19 +22,19 @@ const (
 	workspaceMountPath = "/workspace"
 )
 
-// DockerProvider implements domain.SandboxProvider using Docker via CLI.
+// Provider DockerProvider implements domain.SandboxProvider using Docker via CLI.
 // It does not import any Docker library — it only uses os/exec to invoke the Docker CLI.
-type DockerProvider struct{}
+type Provider struct{}
 
 // NewDockerProvider creates a new instance of DockerProvider.
-func NewDockerProvider() *DockerProvider {
-	return &DockerProvider{}
+func NewDockerProvider() *Provider {
+	return &Provider{}
 }
 
 // Create creates a new Docker container with the workspace mounted as read-only
 // and copies the files to an editable directory inside the container.
 // The host is NEVER modified directly — only via CopyToHost.
-func (p *DockerProvider) Create(ctx context.Context, opts domain.SandboxConfig) (domain.SandboxInstance, error) {
+func (p *Provider) Create(ctx context.Context, opts domain.SandboxConfig) (domain.SandboxInstance, error) {
 	image := opts.Image
 	if image == "" {
 		image = defaultImage
